@@ -1,0 +1,22 @@
+<html>
+<head>
+    <title>Multiplication of Two Numbers</title>
+</head>
+<body>
+    <h3>Multiplication of Two Numbers</h3>
+    <input type="number" id="num1" placeholder="Enter first number" onkeypress="if(event.key === 'Enter') multiplyNumbers()">
+    <input type="number" id="num2" placeholder="Enter second number" onkeypress="if(event.key === 'Enter') multiplyNumbers()">
+    <br>
+    <div id="result"></div>
+    <script>
+        function multiplyNumbers() {
+            let num1 = parseFloat(document.getElementById("num1").value);
+            let num2 = parseFloat(document.getElementById("num2").value);
+            let resultDiv = document.getElementById("result");
+            if (isNaN(num1) || isNaN(num2)) {
+                resultDiv.innerText = "Please enter valid numbers.";
+                return;	}
+            let product = num1 * num2;
+            resultDiv.innerText = `The product of ${num1} and ${num2} is ${product}.`;	}
+    </script>
+</body>    </html>

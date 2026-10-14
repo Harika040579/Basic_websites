@@ -1,0 +1,16 @@
+.photo-container {
+    float: right;
+    margin-left: 20px; /* Adjust the margin as needed */
+}
+
+header {
+    position: relative;
+}
+
+header h1 {
+    text-align: center;
+}
+
+header p {
+    text-align: center;
+}

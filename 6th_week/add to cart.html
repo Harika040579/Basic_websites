@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Novel Nurture</title>
+
+<section>
+<style>
+body {
+    font-family: sans-serif;
+    background-color: #f2f2f2;
+    color: black;
+}
+
+header {
+    background-color: Black;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    height: 50px;
+}
+
+.left {
+   position: absolute;
+   top: 0%;
+   left: 0%;
+   width: 50px;
+   height: 50px;
+  }
+
+        nav {
+   background-color: #333;
+   padding: 10px;
+   transition-property: background-color;
+   transition-duration: 0.1s;
+}
+
+nav ul {
+   list-style: none;
+   margin: 0;
+   padding: 0;
+   display: flex;
+   justify-content: space-around;
+}
+
+nav ul li a {
+   color: white;
+   text-decoration: none;
+   font-weight: bold;
+}
+
+.search-section {
+    background-color: #f4f4f4;
+    padding: 10px 20px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+.search-section input {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 300px;
+    max-width: 100%;
+}
+.search-section button {
+    padding: 8px 16px;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition property: background-color
+    transition-property: color;
+    transition-duration: 0.1s;
+}
+.search-section button:hover {
+    background-color: orange;
+    color: black;
+        }
+
+img.wid {
+  width: 100%;
+  height: 220px;
+  opacity: 0.5;
+  }
+
+.container {
+  position: relative;
+}
+
+.center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: "Georgia";  
+  font-size: 90px;
+}
+
+.item {
+  border: 1px solid;
+  padding: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
+  background-color: white;
+  text-align: center;
+  max-width: 300px;
+  height: 450px;
+  display: inline-flex;
+}
+
+.item1 {
+  border: 1px solid;
+  padding: 20px;
+  background-color: black;
+  color: white;
+  text-align: left;
+  width: 97%;
+  height: auto;
+}
+
+.item2 {
+  border: 1px solid;
+  padding: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
+  background-color: white;
+  text-align: center;
+  width: 230px;
+  height: 450px;
+  display: inline-flex;
+}
+
+.item img {
+  max-width: 250px;
+  height: 300px;
+}
+
+.button{
+  padding: 10px;
+  background-color:black;
+  color:white;
+  font-size:18px;
+  border-radius: 10px;
+  transition-property: background-color;
+  transition-property: color;
+  transition-duration: 0.1s;
+}
+
+.button:hover, .button:focus {
+   background-color: orange;
+   color: black;
+}
+
+</style>
+</section>
+
+</head>
+
+<body>
+
+<div class="container">
+	<img class="wid" src="header.jpg" >
+	<img class="left" src="logo.jpeg" >
+	<div class="center">AniManga</div>
+</div>
+
+<nav>
+	<ul>
+       		<li> <a href="Home.html">Home</a></li>
+        	<li><a href="Fiction.html">Fiction</a></li>
+        	<li><a href="Historic.html">Historic</a></li>
+        	<li><a href="Rom-Com.html">rom-Com</a></li>
+		<li><a href="Suspense.html">Suspense</a></li>
+        	<li><a href="Thriller.html"> Thriller</a></li>
+        	<li><a href="add to cart.html">Cart</a></li>
+	</ul>
+</nav>
+
+<div class="search-section">
+        <input type="text" placeholder="Search For Books...">
+        <button>Search</button>
+    </div>
+
+<h2 class="item1"> Our New Releases </h2>
+
+            <div class="item" >
+                <center><img class="img" src="SMD.jpeg">
+                <h3>Sakamoto Days</h3>
+                <p>about a retired hitman who must protect his family from his former enemies.</p>
+            </div>
+
+            <div class="item" >
+                <center><img class="img" src="zenshu.jpeg">
+                <h3>Zenshu</h3>
+                <p>Natsuko Hirose (voiced by Madeleine Morris), a perfectionist anime writer and director who's overworked and burnt out</p>
+            </div>
+
+            <div class="item" >
+                <center><img class="img" src="BC.jpeg">
+                <h3>Black Clover</h3>
+                <p> Japanese manga series and animated TV show about two orphans who become rivals while trying to become the next Wizard King.</p>
+            </div>
+
+            <div class="item" >
+                <center><img class="img" src="RR.jpeg">
+                <h3>Red river</h3>
+                <p> a fifteen-year-old Japanese girl named Yuri Suzuki, who time travels to Hattusa, the capital of the Hittite Empire in Anatolia.</p>
+            </div>
+
+<h2 class="item1"> And More... </h2>
+
+            <div class="item2" >
+                <center><img class="img" src="SOTCS.jpg">
+                <h3>Steel of the <br> Celestial Shadows</h3>
+		<h3><center><a href="add to cart.html" class="button">🛒 Add to cart</a></center></h3>
+            </div>
+
+            <div class="item2" >
+                <center><img class="img" src="SJT.jpg">
+                <h3>Shonen Jump <br> Titles</h3>
+		<h3><center><a href="add to cart.html" class="button">🛒 Add to cart</a></center></h3>
+            </div>
+
+            <div class="item2" >
+                <center><img class="img" src="TKAY.jpg">
+                <h3>Tenshi to Kaite <br> Akuma to Yomu</h3>
+		<h3><center><a href="add to cart.html" class="button">🛒 Add to cart</a></center></h3>
+            </div>
+
+            <div class="item2" >
+                <center><img class="img" src="GMMS.jpg">
+                <h3>Gyaku mo <br> Mata Shikari</h3>
+		<h3><center><a href="add to cart.html" class="button">🛒 Add to cart</a></center></h3>
+            </div>
+
+            <div class="item2" >
+                <center><img class="img" src="Cesare.jpg">
+                <h3>Cesare <br> (Manga)</h3>
+		<h3><center><a href="add to cart.html" class="button">🛒 Add to cart</a></center></h3>
+            </div>
+
+</body>
+</html>

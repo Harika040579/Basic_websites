@@ -1,0 +1,49 @@
+<html>
+<head>
+    <title>Student Details</title>
+</head>
+<body>
+    <h3>Student Details</h3>
+    <div>
+        <label for="name">Name: </label>
+        <input type="text" id="name" placeholder="Enter student name">
+    </div>
+    <div>
+        <label for="age">Age: </label>
+        <input type="number" id="age" placeholder="Enter student age">
+    </div>
+    <div>
+        <label for="grade">Grade: </label>
+        <input type="text" id="grade" placeholder="Enter student grade">
+    </div>
+    <button onclick="displayDetails()">Display</button>
+    <br>
+    <div id="result"></div>
+
+    <script>
+        function displayDetails() {
+            let name = document.getElementById("name").value;
+            let age = document.getElementById("age").value;
+            let grade = document.getElementById("grade").value;
+            let resultDiv = document.getElementById("result");
+
+            if (!name || !age || !grade) {
+                resultDiv.innerText = "Please fill in all details.";
+                return;
+            }
+
+            if (isNaN(age) || age <= 0) {
+                resultDiv.innerText = "Please enter a valid age.";
+                return;
+            }
+
+            resultDiv.innerHTML = `
+                <h4>Student Information:</h4>
+                <p><strong>Name:</strong> ${name}</p>
+                <p><strong>Age:</strong> ${age}</p>
+                <p><strong>Grade:</strong> ${grade}</p>
+            `;
+        }
+    </script>
+</body>
+</html>

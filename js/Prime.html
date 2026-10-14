@@ -1,0 +1,23 @@
+<html>
+<head>
+<title>Prime Number</title>
+</head>
+<body>
+<script>
+    var x = 11;
+    document.write("x is : "+x);
+    function isPrime(n) {
+        if (n <= 1) return false;
+        for (var i = 2; i <= Math.sqrt(n); i++) {
+            if (n % i == 0) return false;
+        }
+        return true;
+    }
+    if (isPrime(x)) {
+        document.write('<br>'+x + " is A Prime Number");
+    } else {
+        document.write('<br>'+x + " is NOT a Prime Number");
+    }
+</script>
+</body>
+</html>

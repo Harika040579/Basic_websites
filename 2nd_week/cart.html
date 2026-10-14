@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #4CAF50;
+            padding: 10px 20px;
+            color: white;
+            text-align: center;
+        }
+        .cart-container {
+            padding: 20px;
+        }
+        .cart-item {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .cart-item img {
+            max-width: 100px;
+            height: auto;
+            border-radius: 5px;
+        }
+        .cart-item h3 {
+            margin: 0;
+            color: #333;
+        }
+        .cart-item p {
+            margin: 0;
+            color: #e74c3c;
+        }
+        .cart-item button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .cart-item button:hover {
+            background-color: #4CAF50;
+        }
+        .total {
+            text-align: right;
+            padding: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Your Cart</h1>
+    </header>
+    <div class="cart-container">
+        <!-- Cart Item 1 -->
+        <div class="cart-item">
+            <img src="https://via.placeholder.com/100" alt="Football">
+            <h3>Football</h3>
+            <p>$29.99</p>
+            <button>Remove</button>
+        </div>
+        <!-- Cart Item 2 -->
+        <div class="cart-item">
+            <img src="https://via.placeholder.com/100" alt="Basketball">
+            <h3>Basketball</h3>
+            <p>$24.99</p>
+            <button>Remove</button>
+        </div>
+        <!-- Total -->
+        <div class="total">
+            Total: $54.98
+        </div>
+    </div>
+</body>
+</html>

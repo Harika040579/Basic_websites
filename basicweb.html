@@ -1,0 +1,474 @@
+import { useState, useMemo } from 'react'
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "/components/ui/card"
+import { Button } from "/components/ui/button"
+import { Input } from "/components/ui/input"
+import { Label } from "/components/ui/label"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { ShoppingCart, Plus, Minus, X, Search, Filter, Package, Star, Clock, MapPin } from 'lucide-react'
+
+interface RawMaterial {
+  id: string
+  name: string
+  category: string
+  price: number
+  unit: string
+  quality: 'Premium' | 'Standard' | 'Basic'
+  supplier: string
+  location: string
+  minOrder: number
+  rating: number
+  description: string
+  inStock: boolean
+}
+
+interface CartItem extends RawMaterial {
+  quantity: number
+}
+
+const rawMaterials: RawMaterial[] = [
+  {
+    id: '1',
+    name: 'Fresh Tomatoes',
+    category: 'Vegetables',
+    price: 25,
+    unit: 'kg',
+    quality: 'Premium',
+    supplier: 'Green Valley Farms',
+    location: 'Mumbai Central',
+    minOrder: 5,
+    rating: 4.8,
+    description: 'Fresh, ripe tomatoes perfect for street food preparations',
+    inStock: true
+  },
+  {
+    id: '2',
+    name: 'Onions',
+    category: 'Vegetables',
+    price: 18,
+    unit: 'kg',
+    quality: 'Standard',
+    supplier: 'Local Market',
+    location: 'Dadar Market',
+    minOrder: 10,
+    rating: 4.5,
+    description: 'High-quality onions for daily cooking needs',
+    inStock: true
+  },
+  {
+    id: '3',
+    name: 'Potatoes',
+    category: 'Vegetables',
+    price: 15,
+    unit: 'kg',
+    quality: 'Standard',
+    supplier: 'Farm Fresh',
+    location: 'Andheri West',
+    minOrder: 20,
+    rating: 4.6,
+    description: 'Versatile potatoes for various street food items',
+    inStock: true
+  },
+  {
+    id: '4',
+    name: 'Cooking Oil',
+    category: 'Oils',
+    price: 120,
+    unit: 'liter',
+    quality: 'Premium',
+    supplier: 'Oil Express',
+    location: 'Bandra',
+    minOrder: 5,
+    rating: 4.7,
+    description: 'Refined cooking oil suitable for deep frying',
+    inStock: true
+  },
+  {
+    id: '5',
+    name: 'Flour (Maida)',
+    category: 'Grains',
+    price: 35,
+    unit: 'kg',
+    quality: 'Standard',
+    supplier: 'Grain Hub',
+    location: 'Thane',
+    minOrder: 25,
+    rating: 4.4,
+    description: 'Fine quality flour for making batters and doughs',
+    inStock: true
+  },
+  {
+    id: '6',
+    name: 'Spices Mix',
+    category: 'Spices',
+    price: 200,
+    unit: 'kg',
+    quality: 'Premium',
+    supplier: 'Spice World',
+    location: 'Colaba',
+    minOrder: 2,
+    rating: 4.9,
+    description: 'Special blend of spices for street food flavoring',
+    inStock: true
+  }
+]
+
+export default function VendorProcurementApp() {
+  const [cart, setCart] = useState<CartItem[]>([])
+  const [searchTerm, setSearchTerm] = useState('')
+  const [selectedCategory, setSelectedCategory] = useState('All')
+  const [sortBy, setSortBy] = useState('name')
+  const [showCart, setShowCart] = useState(false)
+  const [selectedMaterial, setSelectedMaterial] = useState<RawMaterial | null>(null)
+
+  const categories = ['All', ...Array.from(new Set(rawMaterials.map(m => m.category)))]
+  
+  const filteredMaterials = useMemo(() => {
+    let filtered = rawMaterials.filter(material => 
+      material.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
+      (selectedCategory === 'All' || material.category === selectedCategory)
+    )
+    
+    return filtered.sort((a, b) => {
+      switch (sortBy) {
+        case 'price-low':
+          return a.price - b.price
+        case 'price-high':
+          return b.price - a.price
+        case 'rating':
+          return b.rating - a.rating
+        default:
+          return a.name.localeCompare(b.name)
+      }
+    })
+  }, [searchTerm, selectedCategory, sortBy])
+
+  const addToCart = (material: RawMaterial, quantity: number) => {
+    setCart(prevCart => {
+      const existingItem = prevCart.find(item => item.id === material.id)
+      if (existingItem) {
+        return prevCart.map(item =>
+          item.id === material.id
+            ? { ...item, quantity: item.quantity + quantity }
+            : item
+        )
+      }
+      return [...prevCart, { ...material, quantity }]
+    })
+  }
+
+  const removeFromCart = (materialId: string) => {
+    setCart(prevCart => prevCart.filter(item => item.id !== materialId))
+  }
+
+  const updateQuantity = (materialId: string, newQuantity: number) => {
+    if (newQuantity <= 0) {
+      removeFromCart(materialId)
+    } else {
+      setCart(prevCart =>
+        prevCart.map(item =>
+          item.id === materialId ? { ...item, quantity: newQuantity } : item
+        )
+      )
+    }
+  }
+
+  const cartTotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0)
+  const cartItemCount = cart.reduce((count, item) => count + item.quantity, 0)
+
+  const MaterialCard = ({ material }: { material: RawMaterial }) => (
+    <Card className="hover:shadow-lg transition-shadow cursor-pointer">
+      <CardHeader>
+        <div className="flex justify-between items-start">
+          <div>
+            <CardTitle className="text-lg">{material.name}</CardTitle>
+            <CardDescription>{material.category}</CardDescription>
+          </div>
+          <div className="flex items-center gap-1">
+            <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+            <span className="text-sm">{material.rating}</span>
+          </div>
+        </div>
+      </CardHeader>
+      <CardContent>
+        <div className="space-y-2">
+          <div className="flex justify-between items-center">
+            <span className="text-2xl font-bold text-primary">₹{material.price}</span>
+            <span className="text-sm text-gray-500">per {material.unit}</span>
+          </div>
+          <div className="flex items-center gap-2 text-sm text-gray-600">
+            <MapPin className="w-4 h-4" />
+            <span>{material.location}</span>
+          </div>
+          <div className="flex items-center gap-2 text-sm text-gray-600">
+            <Package className="w-4 h-4" />
+            <span>Min: {material.minOrder} {material.unit}</span>
+          </div>
+        </div>
+      </CardContent>
+      <CardFooter className="flex gap-2">
+        <Button 
+          className="flex-1" 
+          onClick={() => setSelectedMaterial(material)}
+        >
+          View Details
+        </Button>
+        <Button 
+          className="flex-1" 
+          onClick={() => addToCart(material, material.minOrder)}
+        >
+          <Plus className="w-4 h-4 mr-2" />
+          Add to Cart
+        </Button>
+      </CardFooter>
+    </Card>
+  )
+
+  const MaterialDetailModal = () => {
+    if (!selectedMaterial) return null
+    
+    return (
+      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+        <Card className="max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+          <CardHeader>
+            <div className="flex justify-between items-start">
+              <div>
+                <CardTitle className="text-2xl">{selectedMaterial.name}</CardTitle>
+                <CardDescription className="text-lg">{selectedMaterial.category}</CardDescription>
+              </div>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setSelectedMaterial(null)}
+              >
+                <X className="w-4 h-4" />
+              </Button>
+            </div>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label className="text-sm text-gray-600">Price</Label>
+                <p className="text-2xl font-bold">₹{selectedMaterial.price} per {selectedMaterial.unit}</p>
+              </div>
+              <div>
+                <Label className="text-sm text-gray-600">Quality</Label>
+                <p className="text-lg">{selectedMaterial.quality}</p>
+              </div>
+              <div>
+                <Label className="text-sm text-gray-600">Supplier</Label>
+                <p>{selectedMaterial.supplier}</p>
+              </div>
+              <div>
+                <Label className="text-sm text-gray-600">Location</Label>
+                <p>{selectedMaterial.location}</p>
+              </div>
+              <div>
+                <Label className="text-sm text-gray-600">Minimum Order</Label>
+                <p>{selectedMaterial.minOrder} {selectedMaterial.unit}</p>
+              </div>
+              <div>
+                <Label className="text-sm text-gray-600">Rating</Label>
+                <div className="flex items-center gap-1">
+                  <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                  <span>{selectedMaterial.rating}/5</span>
+                </div>
+              </div>
+            </div>
+            <div>
+              <Label className="text-sm text-gray-600">Description</Label>
+              <p className="text-gray-700">{selectedMaterial.description}</p>
+            </div>
+          </CardContent>
+          <CardFooter>
+            <Button 
+              className="w-full" 
+              onClick={() => {
+                addToCart(selectedMaterial, selectedMaterial.minOrder)
+                setSelectedMaterial(null)
+              }}
+            >
+              Add {selectedMaterial.minOrder} {selectedMaterial.unit} to Cart
+            </Button>
+          </CardFooter>
+        </Card>
+      </div>
+    )
+  }
+
+  const CartModal = () => {
+    if (!showCart) return null
+    
+    return (
+      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+        <Card className="max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+          <CardHeader>
+            <div className="flex justify-between items-center">
+              <CardTitle className="text-2xl">Shopping Cart</CardTitle>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setShowCart(false)}
+              >
+                <X className="w-4 h-4" />
+              </Button>
+            </div>
+          </CardHeader>
+          <CardContent>
+            {cart.length === 0 ? (
+              <p className="text-center text-gray-500 py-8">Your cart is empty</p>
+            ) : (
+              <div className="space-y-4">
+                {cart.map(item => (
+                  <Card key={item.id}>
+                    <CardContent className="p-4">
+                      <div className="flex items-center justify-between">
+                        <div className="flex-1">
+                          <h4 className="font-semibold">{item.name}</h4>
+                          <p className="text-sm text-gray-600">₹{item.price} per {item.unit}</p>
+                        </div>
+                        <div className="flex items-center gap-4">
+                          <div className="flex items-center gap-2">
+                            <Button
+                              size="icon"
+                              variant="outline"
+                              onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                            >
+                              <Minus className="w-4 h-4" />
+                            </Button>
+                            <span className="w-12 text-center">{item.quantity}</span>
+                            <Button
+                              size="icon"
+                              variant="outline"
+                              onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                            >
+                              <Plus className="w-4 h-4" />
+                            </Button>
+                          </div>
+                          <div className="text-right">
+                            <p className="font-semibold">₹{item.price * item.quantity}</p>
+                          </div>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => removeFromCart(item.id)}
+                          >
+                            <X className="w-4 h-4" />
+                          </Button>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            )}
+          </CardContent>
+          <CardFooter className="flex justify-between items-center">
+            <div>
+              <p className="text-lg font-semibold">Total: ₹{cartTotal}</p>
+              <p className="text-sm text-gray-600">{cartItemCount} items</p>
+            </div>
+            <Button 
+              className="px-8" 
+              disabled={cart.length === 0}
+              onClick={() => {
+                alert('Order placed successfully!')
+                setCart([])
+                setShowCart(false)
+              }}
+            >
+              Place Order
+            </Button>
+          </CardFooter>
+        </Card>
+      </div>
+    )
+  }
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      {/* Header */}
+      <header className="bg-white shadow-sm sticky top-0 z-40">
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex items-center justify-between">
+            <h1 className="text-2xl font-bold text-primary">Vendor Procurement</h1>
+            <Button
+              variant="outline"
+              className="relative"
+              onClick={() => setShowCart(true)}
+            >
+              <ShoppingCart className="w-5 h-5 mr-2" />
+              Cart
+              {cartItemCount > 0 && (
+                <span className="absolute -top-2 -right-2 bg-primary text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                  {cartItemCount}
+                </span>
+              )}
+            </Button>
+          </div>
+        </div>
+      </header>
+
+      {/* Filters */}
+      <div className="container mx-auto px-4 py-4">
+        <Card>
+          <CardContent className="p-4">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+              <div className="relative">
+                <Search className="absolute left-3 top-3 w-4 h-4 text-gray-400" />
+                <Input
+                  placeholder="Search materials..."
+                  className="pl-10"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+              </div>
+              <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Category" />
+                </SelectTrigger>
+                <SelectContent>
+                  {categories.map(category => (
+                    <SelectItem key={category} value={category}>{category}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <Select value={sortBy} onValueChange={setSortBy}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Sort by" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="name">Name</SelectItem>
+                  <SelectItem value="price-low">Price: Low to High</SelectItem>
+                  <SelectItem value="price-high">Price: High to Low</SelectItem>
+                  <SelectItem value="rating">Rating</SelectItem>
+                </SelectContent>
+              </Select>
+              <Button variant="outline" className="flex items-center gap-2">
+                <Filter className="w-4 h-4" />
+                More Filters
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Materials Grid */}
+      <main className="container mx-auto px-4 py-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredMaterials.map(material => (
+            <MaterialCard key={material.id} material={material} />
+          ))}
+        </div>
+        {filteredMaterials.length === 0 && (
+          <div className="text-center py-12">
+            <p className="text-gray-500">No materials found matching your criteria</p>
+          </div>
+        )}
+      </main>
+
+      {/* Modals */}
+      <MaterialDetailModal />
+      <CartModal />
+    </div>
+  )
+}

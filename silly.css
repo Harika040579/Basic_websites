@@ -1,0 +1,19 @@
+.silly {
+    background-color: black;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+}
+
+.smooth {
+    background-color: pink;
+    color: black;
+    text-align: center;
+    font-size: 10px;
+    font-family: Arial, sans-serif;
+}
+
+.smooth1 {
+    text-align: center;
+    padding-top: 10px;
+}

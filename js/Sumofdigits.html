@@ -1,0 +1,17 @@
+<html>
+<h3>Sum of Digits</h3>
+<body>
+<script>
+var x=1124;
+var temp=x;
+var sum=0;
+while (temp > 0) {
+  var digit = temp % 10;
+  sum = sum + digit;
+  temp = Math.floor(temp / 10);
+}
+document.write("x is: "+x);
+document.write('<br>'+"The sum of digits in x is: "+sum);
+</script>
+</body>
+</html>

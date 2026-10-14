@@ -1,0 +1,21 @@
+<html>
+<head>
+<title>Multiplication</title>
+<script>
+	function isMultiplied(){
+	let input1 = document.getElementById("numberInput1").value;
+	let num1=parseInt(input1);
+	let input2 = document.getElementById("numberInput2").value;
+	let num2=parseInt(input2);
+	let multi=num1*num2;
+	alert("result "+multi);
+	}
+</script>
+</head>
+<body>
+	<h1>Multiplication</h1>
+	<input type="text" id="numberInput1" placeholder="Enter first number"><br><br>
+	<input type="text" id="numberInput2" placeholder="Enter second number"><br><br>
+	<button onclick="isMultiplied()">Answer</button>
+	<p id="result"></p>
+</body></html>

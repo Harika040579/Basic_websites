@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Loading Event</title>
+<script>
+function add() {
+let x = Number(prompt("Enter the value of x:"));
+let y = Number(prompt("Enter the value of y:"));
+let z = x + y;
+document.getElementById("result").innerText = "The sum of two numbers: " + z;
+}
+</script>
+</head>
+<body onload="add()">
+<h2>Sum of Two Numbers</h2>
+<p id="result"></p>
+</body>
+</html>

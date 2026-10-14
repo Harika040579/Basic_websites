@@ -1,0 +1,11 @@
+.smooth{
+display:black;
+text-align:center;
+padding:1em 2em;
+width:10em;
+border-radius:1.5em;
+color:#fff;
+background-color:mediumblue;
+transition-property:background-color;
+transition-duration:0.3s;
+}

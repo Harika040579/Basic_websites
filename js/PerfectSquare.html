@@ -1,0 +1,25 @@
+<html>
+<head>
+<title>Perfect Square</title>
+<h3>Perfect Square</h3>
+<script>
+function isPerfectSquare(){
+let input = document.getElementById("numberInput").value;
+let num = parseInt(input);
+let sqrt = Math.sqrt(num);
+if (Number.isInteger(sqrt)){
+document.getElementById("result").textContent ="YES";
+}
+else{
+document.getElementById("result").textContent ="NO";
+}
+}
+</script>
+</head>
+<body>
+<h1>Perfect Square Checker</h1>
+<input type="text" id = "numberInput" placeholder="Enter a number">
+<button onclick="isPerfectSquare()">Check</button>
+<p id="result"></p>
+</body>
+</html>

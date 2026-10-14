@@ -1,0 +1,28 @@
+<html>
+<head>
+<title>
+Armstrong number
+</title>
+</head>
+<body>
+<h3>Armstrong Checker</h3>
+<script>
+var x = 153;
+var tempX = x;
+var sumX = 0;
+var digitsX = x.toString().length;
+while (tempX > 0) {
+  var digit = tempX % 10;
+  sumX = sumX + Math.pow(digit, digitsX);
+  tempX = Math.floor(tempX / 10);
+}
+if (sumX == x) {
+  document.write('<br>'+"x is: "+x);
+  document.write("<br>" + x + " is an Armstrong number.");
+} else {
+  document.write('<br>'+"x is: "+x);
+  document.write("<br>" + x + " is not an Armstrong number.");
+}
+</script>
+</body>
+</html>
